@@ -5,6 +5,7 @@ public class Welcome {
 	static final int NUM_ITEM = 7;
 	static CartItem[] mCartItem = new CartItem[NUM_BOOK];
 	static int mCartCount = 0;
+	static User mUser;
 
 	public static void main(String[] args) {
 		String[][]mBook = new String[NUM_BOOK][NUM_ITEM];
@@ -16,6 +17,8 @@ public class Welcome {
 
 		System.out.print("연락처를 입력하세요: ");
 		int phone = input.nextInt();
+		
+		mUser = new User(name, phone);
 		
 		// System.out.println("Welcome to Shopping Mall");
 		// System.out.println("Welcome to Book Market!");
@@ -43,8 +46,10 @@ public class Welcome {
 			System.out.println("메뉴 번호를 선택해주세요.");
 			int choice = input.nextInt();
 			
-			if ( choice  < 1 || choice > 8) {
-				System.out.println("1부터 8까지의 숫자를 입력하세요.");
+//			if ( choice  < 1 || choice > 8) {
+//				System.out.println("1부터 8까지의 숫자를 입력하세요.");
+			if ( choice  < 1 || choice > 9) {
+				System.out.println("1부터 9까지의 숫자를 입력하세요.");
 			} else {
 				switch(choice) {
 				case 1:
@@ -71,8 +76,12 @@ public class Welcome {
 					menuCartRemoveItem();
 					break;				
 				case 8:
+					input.close();
 					menuCartExit();
 					quit = true;
+					break;
+				case 9:
+					menuAdminLogin();
 					break;
 						
 				} //switch 끝
@@ -91,6 +100,7 @@ public class Welcome {
 		System.out.println("2. 장바구니 상품 목록 보기 \t6. 장바구니의 항목 수량 줄이기");
 		System.out.println("3. 장바구니 비우기 \t\t7. 장바구니의 항목 삭제하기");
 		System.out.println("4. 영수증 표시하기 \t\t8. 종료");
+		System.out.println("9. 관리자 로그인");
 		System.out.println("*********************************************");
 		}
 	
@@ -106,8 +116,9 @@ public class Welcome {
 	public static void menuGuestInfo(String name, int phone) {
 		System.out.println("1. 현재 고객 정보 : ");
 		// System.out.println("이름" + name + " 연락처 : " + phone);
-		Person person = new Person(name, phone);
-		System.out.println("이름" + person.getName() + "연락처" + person.getPhone());
+		// Person person = new Person(name, phone);
+		// System.out.println("이름" + person.getName() + "연락처" + person.getPhone());	
+		System.out.println("이름 " + mUser.getName() + "연락처" + mUser.getPhone());
 	}
 	/**
 	 *  설명: 2번
@@ -170,6 +181,7 @@ public class Welcome {
 							mCartItem[mCartCount++] = new CartItem(book[numID]);
 				}
 				quit = true;
+				input.close();
 			} else
 				System.out.println("다시 입력해 주세요");
 		} // while 끝
@@ -193,6 +205,26 @@ public class Welcome {
 	public static void menuCartExit() {
 		System.out.println("8. 종료");
 }
+	public static void menuAdminLogin() {
+		System.out.println("관리자 정보를 입력하세요: ");
+		
+		Scanner input = new Scanner(System.in);
+		System.out.print("아이디: ");
+		String adminID = input.next();
+		
+		System.out.print("비밀번호: ");
+		String adminPW = input.next();
+		
+		Admin admin = new Admin(mUser.getName(), mUser.getPhone());
+		if (adminID.equals(admin.getID()) && adminPW.equals(admin.getpassword())) {
+			System.out.println("이름 " + admin.getName() + "연락처 " + admin.getPhone());
+			System.out.println("아이디 " + admin.getID() + "비밀번호 " + admin.getpassword());
+	} else {
+		System.out.println("관리자 정보가 일치하지 않습니다.");
+		
+	}
+}
+
 	public static void BookList(String[][]book) {
 		
 		book[0][0] = "ISBN1234";
