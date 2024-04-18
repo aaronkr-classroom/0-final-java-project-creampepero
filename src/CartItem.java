@@ -1,6 +1,6 @@
 
 public class CartItem {
-	private String[] itembook = new String[7];
+	private Book itemBook;
 	private String bookID;
 	private int quantity;
 	private int totalPrice;
@@ -8,18 +8,26 @@ public class CartItem {
 	public CartItem() {
 		
 	}
-		public CartItem(String[] book) {  
-			this.itembook = book;
-			this.bookID = book[0];
-			this.quantity = 1;
-			updateTotalPrice();
-		}
-	public String[] getItembook(String[]itembook) {
-		return itembook;
+	
+	public CartItem(Book booklist) {
+		this.itemBook = booklist;
+		this.bookID = booklist.getBookId();
+		this.quantity = 1;
+		updateTotalPrice();	
 	}
-	public void setItembook(String[]itembook) { 
-		this.itembook = itembook;
-}
+	
+	public Book getItemBook() {
+		return itemBook;
+	}
+	
+	public void setItemBook(Book itemBook) {
+		this.itemBook = itemBook;
+	}
+	
+	public void setTotalPrice(int totalPrice) {
+		this.totalPrice = totalPrice;
+	}
+	
 	public String getBookID() {
 		return bookID;
 	}
@@ -27,7 +35,7 @@ public class CartItem {
 		this.bookID = bookID;
 		this.updateTotalPrice();
 	}
-	public int getquantity() {
+	public int getQuantity() {
 		return quantity;
 	}
 	public void setQuantity(int quantity) {
@@ -38,6 +46,7 @@ public class CartItem {
 		return totalPrice;
 	}
 	public void updateTotalPrice() {
-		totalPrice = Integer.parseInt(this.itembook[2]) * this.quantity;
+		// totalPrice = Integer.parseInt(this.itembook[2]) * this.quantity;
+		totalPrice = this.itemBook.getUnitPrice() * this.quantity;
 	}
 }
