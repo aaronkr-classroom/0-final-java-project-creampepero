@@ -1,3 +1,4 @@
+package com.market.member;
 
 public class Person {
 	// 클래스 변수
